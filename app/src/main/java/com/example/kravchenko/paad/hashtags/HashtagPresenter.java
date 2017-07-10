@@ -9,6 +9,6 @@ public interface HashtagPresenter {
     void onResume();
     void onPause();
     void onDestroy();
-    void getImageTweets();
+    void getHashtagTweets();
     void onEventMainThread(HashtagsEvent event);
 }

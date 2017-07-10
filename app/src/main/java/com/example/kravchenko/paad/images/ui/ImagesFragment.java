@@ -69,6 +69,7 @@ public class ImagesFragment extends Fragment implements ImagesView, OnItemClickL
         TwitterClientApp app = (TwitterClientApp)getActivity().getApplication();
         ImagesComponent imagesComponent = app.getImagesComponent(this, this, this);
         imagesComponent.inject(this);
+
     }
 
     @Override

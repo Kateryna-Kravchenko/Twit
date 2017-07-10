@@ -38,13 +38,15 @@ public class HashtagsPresenterImpl implements HashtagPresenter {
     }
 
     @Override
-    public void getImageTweets() {
+    public void getHashtagTweets() {
         if (view != null) {
             view.hideHashtags();
             view.showProgress();
         }
         interactor.execute();
     }
+
+
 
     @Override
     @Subscribe

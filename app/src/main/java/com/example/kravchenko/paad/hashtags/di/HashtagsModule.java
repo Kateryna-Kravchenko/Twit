@@ -2,18 +2,15 @@ package com.example.kravchenko.paad.hashtags.di;
 
 import com.example.kravchenko.paad.api.CustomTwitterApiClient;
 import com.example.kravchenko.paad.entities.Hashtag;
-import com.example.kravchenko.paad.entities.Image;
+import com.example.kravchenko.paad.hashtags.HashtagPresenter;
+import com.example.kravchenko.paad.hashtags.HashtagsInteractor;
+import com.example.kravchenko.paad.hashtags.HashtagsInteractorImpl;
+import com.example.kravchenko.paad.hashtags.HashtagsPresenterImpl;
+import com.example.kravchenko.paad.hashtags.HashtagsRepository;
+import com.example.kravchenko.paad.hashtags.HashtagsRepositoryImpl;
 import com.example.kravchenko.paad.hashtags.ui.HashtagsView;
 import com.example.kravchenko.paad.hashtags.ui.adapters.HashtagsAdapter;
 import com.example.kravchenko.paad.hashtags.ui.adapters.OnItemClickListener;
-import com.example.kravchenko.paad.images.ImagesInteractor;
-import com.example.kravchenko.paad.images.ImagesInteractorImpl;
-import com.example.kravchenko.paad.images.ImagesPresenteImpl;
-import com.example.kravchenko.paad.images.ImagesPresenter;
-import com.example.kravchenko.paad.images.ImagesRepository;
-import com.example.kravchenko.paad.images.ImagesRepositoryImpl;
-import com.example.kravchenko.paad.images.ui.ImagesView;
-import com.example.kravchenko.paad.images.ui.adapters.ImagesAdapter;
 import com.example.kravchenko.paad.lib.base.EventBus;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Session;
@@ -23,12 +20,13 @@ import java.util.List;
 
 import javax.inject.Singleton;
 
+import dagger.Module;
 import dagger.Provides;
 
 /**
  * Created by katerynakravchenko on 29.06.17.
  */
-
+@Module
 public class HashtagsModule {
 
     private HashtagsView view;
@@ -41,7 +39,7 @@ public class HashtagsModule {
 
     @Provides
     @Singleton
-    ImagesAdapter providesAdapter(List<Hashtag> dataset,  OnItemClickListener clickListener){
+    HashtagsAdapter providesAdapter(List<Hashtag> dataset,  OnItemClickListener clickListener){
         return new HashtagsAdapter(dataset, clickListener);
     }
 
@@ -53,32 +51,32 @@ public class HashtagsModule {
 
     @Provides
     @Singleton
-    List<Image> providesItemsList(){
-        return new ArrayList<Image>();
+    List<Hashtag> providesItemsList(){
+        return new ArrayList<Hashtag>();
     }
 
     @Provides
     @Singleton
-    ImagesPresenter providesImagesPresenter(ImagesView view, EventBus eventBus, ImagesInteractor interactor){
-        return new ImagesPresenteImpl( eventBus,view, interactor);
+    HashtagPresenter providesHashtagsPresenter(HashtagsView view, EventBus eventBus, HashtagsInteractor interactor){
+        return new HashtagsPresenterImpl( eventBus,view, interactor);
     }
 
     @Provides
     @Singleton
-    ImagesView providesImagesView(){
+    HashtagsView providesHashtagsView(){
         return this.view;
     }
 
     @Provides
     @Singleton
-    ImagesInteractor providesImagesInteractor(ImagesRepository repository){
-        return new ImagesInteractorImpl(repository);
+    HashtagsInteractor providesHashtagsInteractor(HashtagsRepository repository){
+        return new HashtagsInteractorImpl(repository);
     }
 
     @Provides
     @Singleton
-    ImagesRepository providesImagesRepository(EventBus eventBus, CustomTwitterApiClient client){
-        return new ImagesRepositoryImpl(eventBus, client);
+    HashtagsRepository providesHashtagsRepository(EventBus eventBus, CustomTwitterApiClient client){
+        return new HashtagsRepositoryImpl(eventBus, client);
     }
 
     @Provides
@@ -93,4 +91,4 @@ public class HashtagsModule {
         return Twitter.getSessionManager().getActiveSession();
     }
 }
-}
+
